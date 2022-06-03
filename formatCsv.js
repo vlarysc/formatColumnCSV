@@ -1,6 +1,6 @@
 const fsPromises = require('fs').promises;
 const path = require('path');
-let columnsUnformatted = ["old_id", "coordenador sdr", "coordenador is"];
+let columnsUnformatted = ["old_id", "coordinator"];
 let settingsOfColumns = columnsUnformatted.toString().replace(/,/g, ";");
 let columnsProcessed = []
 
@@ -11,8 +11,8 @@ const formatColumns = async () => {
     columnsConverting.toLowerCase().includes("old_id") ? columns.push('leadId') : '';
     columnsConverting.toLowerCase().includes("consultor" || "consultor sdr") ? columns.push('consultorLead') : '';
     columnsConverting.toLowerCase().includes("consultor is") ? columns.push('consultorProposta') : '';
-    columnsConverting.toLowerCase().includes("coordenador" || "coordenador sdr") ? columns.push('coordenadorSDR') : '';
-    columnsConverting.toLowerCase().includes("coordenador is") ? columns.push('coordenadorIS') : '';
+    columnsConverting.toLowerCase().includes("coordinator") ? columns.push('coordenadorSDR') : '';
+    columnsConverting.toLowerCase().includes("proposal_coordinator") ? columns.push('coordenadorIS') : '';
     columnsConverting.toLowerCase().includes("gerente") ? columns.push('gerenteComercial') : '';
     return columns;
   } catch (err) {
@@ -33,7 +33,7 @@ const formatCsv = async (inputFile, outputFile, typeFile, settingsOfColumns, col
 
 formatColumns().then(total => {
   columnsProcessed = total.toString().replace(/,/g, ";");
-  formatCsv("contratacao", "CRED-3432", "contratacoes", settingsOfColumns, columnsProcessed)
+  formatCsv("Lead", "CRED-5983", "Leads", settingsOfColumns, columnsProcessed)
 })
 
 // estudar process.argv do Node by Will
